@@ -50,23 +50,8 @@ mod.directive('infiniteScroll', [
           }
         };
         handler = function() {
-          var containerBottom, containerTopOffset, elementBottom, remaining, shouldScroll;
-          if (container === windowElement) {
-            containerBottom = height(container) + pageYOffset(container[0].document.documentElement);
-            elementBottom = offsetTop(elem) + height(elem);
-          } else {
-            containerBottom = height(container);
-            containerTopOffset = 0;
-            if (offsetTop(container) !== void 0) {
-              containerTopOffset = offsetTop(container);
-            }
-            elementBottom = offsetTop(elem) - containerTopOffset + height(elem);
-          }
-          if (useDocumentBottom) {
-            elementBottom = height((elem[0].ownerDocument || elem[0].document).documentElement);
-          }
-          remaining = elementBottom - containerBottom;
-          shouldScroll = remaining <= height(container) * scrollDistance + 1;
+          var shouldScroll;
+          shouldScroll = $(window).scrollTop() + $(window).height() >= $(document).height() - scrollDistance;
           if (shouldScroll) {
             checkWhenEnabled = true;
             if (scrollEnabled) {
